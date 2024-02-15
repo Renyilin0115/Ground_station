@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        @font-face {
+            font-family: 'DM Serif Display';
+            src: url('./fonts/DMSerifDisplay-Regular.ttf');
+        }
+        h1 {
+            color: yellow;
+            font-family: 'DM Serif Display', serif;
+            font-size: 50px;
+        }
+        h2 {
+            color: rgb(226, 211, 43);
+            font-family: 'DM Serif Display', serif;
+            font-size: 30px;
+            border-top: 2px solid #940285;
+            margin-bottom: 50px;
+        }
+        p {
+            color: bisque;
+            font-family: 'DM Serif Display', serif;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body style="background-color: rgb(53, 0, 128);">
+    <header id="my_header">
+        <h1>STL LAB <br> ground tsation</h1>
+        <h2>Project name：porales</h2>
+    </header>
+    <p id="ALT">Altitude：</p>
+    <p id="ACC">Acceleration：</p>
+    <p id="ATT">Attitude：</p>
+    <script>
+        // 使用AJAX從後端定期獲取數據
+        setInterval(function() {
+            fetch('http://192.168.1.111/getdata')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('ALT').innerHTML = 'Altitude：' + data.altitude + ' meter';
+                    document.getElementById('ACC').innerHTML = 'Acceleration：' + data.acceleration;
+                    document.getElementById('ATT').innerHTML = 'Attitude：' + data.attitude;
+                })
+                .catch(error => console.error('There has been a problem with your fetch operation:', error));
+        }, 500); // 每0.5秒更新一次
+    </script>
+    
+    
+</body>
+</html> 
